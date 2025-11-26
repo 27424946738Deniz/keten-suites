@@ -80,18 +80,8 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Image Grid with Overlay Text */}
+            {/* Image Grid */}
             <div className="relative">
-              {/* Comfort is Home - Overlay */}
-              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-                <h3
-                  className="text-center font-serif text-3xl italic text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] sm:text-4xl md:text-5xl lg:text-6xl"
-                  style={{ fontFamily: "Georgia, Times New Roman, serif" }}
-                >
-                  Comfort is Home
-                </h3>
-              </div>
-
               {/* Images */}
               <div className="grid gap-3 sm:gap-4 md:grid-cols-2 md:gap-6">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg sm:rounded-2xl">
