@@ -18,44 +18,25 @@ export const FeaturedUnitsSection = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const fetchFeaturedUnits = async () => {
-      try {
-        const response = await fetch("/api/units");
-        const result = await response.json();
-
-        if (result.success && result.data && result.data.length > 0) {
-          // Show all units
-          setUnits(result.data);
-        } else {
-          // Use mock data as fallback
-          setUnits(unitsMockData);
-        }
-      } catch (error) {
-        console.error("Error fetching featured units:", error);
-        // Use mock data on error
-        setUnits(unitsMockData);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchFeaturedUnits();
+    // Use mock data directly for static site
+    setUnits(unitsMockData);
+    setIsLoading(false);
   }, []);
 
   if (isLoading) {
     return (
-      <section className="bg-muted/30 py-20">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="container px-4 sm:px-6">
+          <div className="mb-8 text-center sm:mb-10 md:mb-12">
+            <h2 className="mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl md:text-4xl">
               Daire Tiplerimiz
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="mx-auto max-w-2xl text-sm text-muted-foreground sm:text-base">
               İhtiyaçlarınıza uygun modern yaşam alanlarını keşfedin
             </p>
           </div>
           <div className="flex items-center justify-center py-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-black border-t-transparent" />
           </div>
         </div>
       </section>
@@ -63,19 +44,19 @@ export const FeaturedUnitsSection = () => {
   }
 
   return (
-    <section className="bg-muted/30 py-24">
-      <div className="container">
-        <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+    <section className="bg-gray-50 py-12 sm:py-16 md:py-20 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="mb-8 text-center sm:mb-10 md:mb-12">
+          <h2 className="mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl md:text-4xl">
             Daire Tiplerimiz
           </h2>
-          <p className="text-lg text-muted-foreground md:text-xl">
+          <p className="mx-auto max-w-2xl text-sm text-muted-foreground sm:text-base md:text-lg">
             İhtiyaçlarınıza uygun modern yaşam alanlarını keşfedin
           </p>
         </div>
 
-        {/* Scrollable Carousel - Always active */}
-        <div className="relative px-12">
+        {/* Carousel */}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-10 md:px-14">
           <Carousel
             opts={{
               align: "start",
@@ -83,32 +64,38 @@ export const FeaturedUnitsSection = () => {
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-4">
+            <CarouselContent className="-ml-3 sm:-ml-4">
               {units.map((unit) => (
-                <CarouselItem key={unit.id} className="pl-4 md:basis-1/2 lg:basis-1/2">
+                <CarouselItem
+                  key={unit.id}
+                  className="pl-3 sm:pl-4 md:basis-1/2 lg:basis-1/3"
+                >
                   <div className="h-full">
-                    <UnitCard 
-                      unit={unit} 
+                    <UnitCard
+                      unit={unit}
                       imageUrl={unit.images?.[0]?.url}
                       imageAlt={unit.images?.[0]?.alt_text}
-                      className="h-full" 
+                      className="h-full"
                     />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0" />
-            <CarouselNext className="right-0" />
+            <CarouselPrevious className="-left-3 hidden h-10 w-10 border-gray-200 bg-white shadow-md hover:bg-gray-50 sm:-left-5 sm:flex md:-left-7" />
+            <CarouselNext className="-right-3 hidden h-10 w-10 border-gray-200 bg-white shadow-md hover:bg-gray-50 sm:-right-5 sm:flex md:-right-7" />
           </Carousel>
         </div>
 
-        <div className="mt-16 text-center">
-          <Button asChild size="lg" className="bg-[#8ABFA3] hover:bg-[#7AB093] text-white">
-            <Link href="/units">Tüm Daire Tiplerini Görüntüle</Link>
+        <div className="mt-8 text-center sm:mt-10 md:mt-12">
+          <Button
+            asChild
+            size="lg"
+            className="bg-black px-6 text-white hover:bg-gray-800 sm:px-8"
+          >
+            <Link href="/units">Tüm Daireleri Görüntüle</Link>
           </Button>
         </div>
       </div>
     </section>
   );
 };
-

@@ -28,16 +28,32 @@ export const useAvailability = (
       try {
         setIsLoading(true);
         setError(null);
-        const response = await fetch(
-          `/api/availability?property_id=${propertyId}&start_date=${startDate}&end_date=${endDate}`
-        );
-        const result = await response.json();
+        
+        // Mock API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
 
-        if (!response.ok || !result.success) {
-          throw new Error(result.error || "Failed to check availability");
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        const totalDays = Math.ceil(
+          (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
+        );
+
+        // Generate available dates (all dates in range)
+        const availableDates: string[] = [];
+        const current = new Date(start);
+        while (current < end) {
+          availableDates.push(current.toISOString().split("T")[0]);
+          current.setDate(current.getDate() + 1);
         }
 
-        setAvailability(result.data);
+        setAvailability({
+          available: true,
+          available_dates: availableDates,
+          total_days: totalDays,
+          start_date: startDate,
+          end_date: endDate,
+        });
       } catch (err) {
         setError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {

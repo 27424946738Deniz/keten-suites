@@ -29,26 +29,12 @@ export const AvailabilityCalendar = ({
       try {
         setIsLoading(true);
         
-        // Build query parameters
-        const params = new URLSearchParams({
-          property_id: propertyId,
-        });
-        if (unitId) {
-          params.append("unit_id", unitId);
-        }
-
-        const response = await fetch(`/api/availability/blocked-dates?${params.toString()}`);
-
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.data?.blocked_dates) {
-            // Convert date strings to Date objects
-            const dates = result.data.blocked_dates.map((dateStr: string) => new Date(dateStr));
-            setBlockedDates(dates);
-          }
-        } else {
-          console.error("Failed to fetch blocked dates");
-        }
+        // Mock API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // For static export, return empty blocked dates or hardcoded ones
+        // const dates = ["2024-12-25", "2025-01-01"].map(d => new Date(d));
+        setBlockedDates([]);
       } catch (error) {
         console.error("Error fetching blocked dates:", error);
       } finally {

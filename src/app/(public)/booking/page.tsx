@@ -83,7 +83,6 @@ function BookingPageContent() {
               startDate={dateRange.from}
               endDate={dateRange.to}
               basePricePerMonth={basePricePerMonth}
-              studentDiscountPercentage={studentDiscountPercentage}
             />
           </div>
         </div>

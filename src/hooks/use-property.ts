@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { propertiesMockData } from "@/data/properties-mock";
 
 interface Property {
   id: string;
@@ -25,14 +26,18 @@ export const useProperty = (slug: string) => {
     const fetchProperty = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/properties/${slug}`);
-        const result = await response.json();
+        
+        // Mock API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const foundProperty = propertiesMockData.find(p => p.slug === slug);
 
-        if (!response.ok || !result.success) {
-          throw new Error(result.error || "Failed to fetch property");
+        if (!foundProperty) {
+          throw new Error("Property not found");
         }
 
-        setProperty(result.data);
+        // Cast mock data to Property type (may need adjustment based on mock data structure)
+        setProperty(foundProperty as unknown as Property);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {

@@ -5,11 +5,11 @@ export const unitsMockData: any[] = [
     id: "1+1-economy-suite",
     unit_name: "1+1 Economy Suite",
     slug: "1-plus-1-economy-suite",
+    short_description:
+      "Kompakt ve ekonomik stüdyo daire, bekarlar veya genç profesyoneller için ideal.",
     unit_type: UnitType.ECONOMY_1_PLUS_1,
     capacity: 2,
     base_price_per_month: 15000,
-    short_description:
-      "Compact and affordable studio apartment perfect for singles or young professionals.",
     description: `
       <p>Our 1+1 Economy Suite offers a comfortable and budget-friendly living space ideal for individuals and young professionals. Despite its compact size, the suite is thoughtfully designed to maximize space and functionality.</p>
       <p>The apartment features a cozy bedroom, a functional living area, a modern kitchenette, and a private bathroom. Large windows provide natural light throughout the day, creating a bright and welcoming atmosphere.</p>
@@ -62,7 +62,7 @@ export const unitsMockData: any[] = [
     capacity: 2,
     base_price_per_month: 22000,
     short_description:
-      "Upgraded studio with modern fixtures, premium finishes, and better views.",
+      "Modern donanımlı, premium bitişli ve şehir manzaralı üst düzey stüdyo daire.",
     description: `
       <p>Experience elevated comfort in our 1+1 Premium Suite. This upgraded studio apartment offers a more spacious layout with high-end finishes and contemporary design elements.</p>
       <p>Featuring premium appliances, a larger living space, and superior fixtures throughout, this suite is perfect for professionals who appreciate quality and style. The bedroom area is generously sized, and the living room offers ample space for entertaining or relaxing.</p>
@@ -121,7 +121,7 @@ export const unitsMockData: any[] = [
     capacity: 4,
     base_price_per_month: 28000,
     short_description:
-      "Spacious two-bedroom apartment ideal for families or roommates sharing.",
+      "Aileler veya ev arkadaşları için ideal, geniş iki yatak odalı daire.",
     description: `
       <p>Our 2+1 Economy Suite provides comfortable accommodation for families or groups sharing costs. With two separate bedrooms, this apartment offers privacy and space at an affordable price point.</p>
       <p>The open-plan living and dining area creates a welcoming space for family time or socializing with roommates. The fully equipped kitchen allows for home cooking, helping to manage living expenses effectively.</p>
@@ -184,7 +184,7 @@ export const unitsMockData: any[] = [
     capacity: 5,
     base_price_per_month: 42000,
     short_description:
-      "Two-story duplex apartment with private terrace, perfect for families.",
+      "Özel teraslı iki katlı dubleks daire, aileler için mükemmel seçim.",
     description: `
       <p>Experience elevated family living in our 2+1 Family Duplex. This stunning two-story apartment combines space, privacy, and luxury with its innovative duplex design and private terrace.</p>
       <p>The ground floor features an expansive living and dining area, a modern fully-equipped kitchen, and a guest bathroom. Large sliding doors open onto your private terrace - perfect for outdoor dining, children's play area, or simply relaxing while enjoying fresh air and views.</p>
@@ -254,7 +254,7 @@ export const unitsMockData: any[] = [
     capacity: 6,
     base_price_per_month: 55000,
     short_description:
-      "Premium three-bedroom duplex with expansive terrace, ideal for larger families.",
+      "Geniş teraslı premium üç yatak odalı dubleks, büyük aileler için ideal.",
     description: `
       <p>Our flagship 3+1 Family Duplex represents the pinnacle of family living at Keten Suites. This spectacular two-story residence offers unparalleled space, luxury finishes, and a generous private terrace with breathtaking views.</p>
       <p>The lower level boasts an open-concept design with a spacious living room, elegant dining area, and a state-of-the-art kitchen with premium appliances and ample counter space. Floor-to-ceiling windows flood the space with natural light and provide stunning city views. Step out onto your expansive private terrace - an outdoor oasis perfect for family gatherings, BBQs, or quiet evenings under the stars.</p>

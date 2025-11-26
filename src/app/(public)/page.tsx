@@ -1,44 +1,25 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Image from "next/image";
+import { HeroSearchForm } from "@/components/search/hero-search-form";
+import { FeaturedUnitsSection } from "@/components/units/featured-units-section";
 import { Testimonial } from "@/components/shared/testimonial";
 import { BlogCard } from "@/components/blog/blog-card";
-import { PropertySearch } from "@/components/search/property-search";
-import { FeaturedUnitsSection } from "@/components/units/featured-units-section";
-import { getBlogPosts } from "@/lib/supabase/queries";
-import { getAllProperties } from "@/lib/supabase/queries";
-import Image from "next/image";
+import { blogPostsMockData } from "@/data/blog-mock";
+import { ImageCarousel } from "@/components/home/image-carousel";
+import { ServicesTabs } from "@/components/home/services-tabs";
+import { BusinessSlider } from "@/components/home/business-slider";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heart, MapPin, Home, Users } from "lucide-react";
 
 export default async function HomePage() {
-  // Fetch latest blog posts and properties
-  let latestPosts = [];
-  let properties = [];
-
-  try {
-    latestPosts = await getBlogPosts(3);
-  } catch (error) {
-    console.error("Error fetching blog posts:", error);
-  }
-
-  try {
-    properties = await getAllProperties();
-  } catch (error) {
-    console.error("Error fetching properties:", error);
-  }
-
-  const mainProperty = properties[0];
-  const heroImage = mainProperty?.images?.[0]?.url;
+  const latestPosts = blogPostsMockData.slice(0, 3);
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden py-16">
+      <section className="relative flex h-[85vh] min-h-[500px] max-h-[800px] flex-col">
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/keten dışarıdan arka plan.jpg"
@@ -46,71 +27,89 @@ export default async function HomePage() {
             fill
             className="object-cover object-center"
             priority
-            quality={95}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
         </div>
-        <div className="relative z-10 container">
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-white drop-shadow-2xl md:text-5xl lg:text-6xl">
-              Lüks ve Konforlu Konaklamayı Keşfedin
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center px-4 pt-16 sm:px-6 md:px-12 lg:px-20">
+          <div className="max-w-3xl">
+            <h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+              Keten Suites&apos;de
+              <br />
+              <span className="text-white/90">Evinizin Konforunu</span>
+              <br />
+              Yaşayın
             </h1>
-            <p className="mb-12 text-base text-white/90 drop-shadow-lg md:text-lg lg:text-xl">
-              Nefes kesici manzaralardan zarif mobilyalara kadar, dairelerimiz lüks kavramını yeniden tanımlıyor ve benzersiz bir deneyim sunuyor.
+            <p className="mt-2 max-w-lg text-sm text-white/80 sm:mt-3 sm:text-base">
+              Modern tasarım ve şehir manzarasıyla, Keten Suites iş ve tatil
+              seyahatleriniz için mükemmel konfor sunuyor.
             </p>
-            {/* Search Bar in Hero */}
-            <div className="mx-auto max-w-6xl">
-              <PropertySearch />
-            </div>
           </div>
+        </div>
+
+        {/* Search Form */}
+        <div className="relative z-20 px-4 pb-4 sm:px-6 sm:pb-6 md:px-12 lg:px-20">
+          <HeroSearchForm />
         </div>
       </section>
 
       {/* Welcome Section */}
-      <section className="py-20">
-        <div className="container">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-12 text-center">
-              <h2 className="mb-6 text-3xl font-bold md:text-4xl lg:text-5xl">
-                Nook'a Hoş Geldiniz – Şehirdeki Eviniz
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="mx-auto max-w-5xl">
+            {/* Text Content */}
+            <div className="mb-10 text-center sm:mb-12 md:mb-16">
+              <h2 className="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
+                Keten Suites&apos;e Hoş Geldiniz
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-muted-foreground md:text-lg">
-                Nook'ta, rezidans daire deneyimini yeniden tanımlıyoruz. Özenle tasarlanmış yaşam alanlarımız konforu, işlevselliği ve tarzı bir araya getirerek nerede olursanız olun kendinizi evinizde hissetmenizi sağlıyor. Üç ay kalın ya da bir yıl, her Nook dairesi yaşama hazır.
+              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Şehirdeki eviniz olarak tasarlanan Keten Suites&apos;te, modern yaşam
+                deneyimini yeniden tanımlıyoruz. Özenle tasarlanmış yaşam
+                alanlarımız konforu, işlevselliği ve tarzı bir araya getirerek
+                nerede olursanız olun kendinizi evinizde hissetmenizi sağlıyor.
               </p>
-              <div className="mt-8">
-                <Button asChild size="lg" className="bg-[#8ABFA3] hover:bg-[#7AB093] text-white">
+              <div className="mt-6 sm:mt-8">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-black px-8 text-white hover:bg-gray-800"
+                >
                   <Link href="/units">Daireleri Keşfet</Link>
                 </Button>
               </div>
             </div>
 
-            {/* Image Grid */}
-            <div className="relative mt-16 grid gap-6 md:grid-cols-2">
-              {/* Comfort is Home Text Overlay */}
-              <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
-                <h3 className="font-serif text-4xl italic text-white drop-shadow-2xl md:text-5xl lg:text-6xl" style={{ fontFamily: 'Georgia, serif' }}>
+            {/* Image Grid with Overlay Text */}
+            <div className="relative">
+              {/* Comfort is Home - Overlay */}
+              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+                <h3
+                  className="text-center font-serif text-3xl italic text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] sm:text-4xl md:text-5xl lg:text-6xl"
+                  style={{ fontFamily: "Georgia, Times New Roman, serif" }}
+                >
                   Comfort is Home
                 </h3>
               </div>
 
-              {/* Left Image */}
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
-                <Image
-                  src="/1729084042_14BPRAW6MG_medium.jpg"
-                  alt="Modern apartment living room with balcony"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Right Image */}
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
-                <Image
-                  src="/1729083986_A6WDV4VDKB_medium.jpg"
-                  alt="Spacious apartment dining and living area"
-                  fill
-                  className="object-cover"
-                />
+              {/* Images */}
+              <div className="grid gap-3 sm:gap-4 md:grid-cols-2 md:gap-6">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg sm:rounded-2xl">
+                  <Image
+                    src="/1729084042_14BPRAW6MG_medium.jpg"
+                    alt="Modern oturma odası"
+                    fill
+                    className="object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg sm:rounded-2xl">
+                  <Image
+                    src="/1729083986_A6WDV4VDKB_medium.jpg"
+                    alt="Şık salon"
+                    fill
+                    className="object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -118,114 +117,65 @@ export default async function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-muted/30 py-16">
-        <div className="container">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-white py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-4">
             {/* Stat 1 */}
-            <Card className="border-0 bg-[#FFF8E1] shadow-sm">
-              <CardContent className="p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                  </svg>
+            <Card className="border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+              <CardContent className="p-4 text-center sm:p-6">
+                <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 sm:mb-4 sm:h-12 sm:w-12">
+                  <Heart className="h-5 w-5 text-gray-700 sm:h-6 sm:w-6" />
                 </div>
-                <div className="mb-2 text-4xl font-bold">%100</div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  Müşteri Memnuniyet Oranı
+                <div className="text-2xl font-bold text-black sm:text-3xl md:text-4xl">
+                  %100
+                </div>
+                <p className="mt-1 text-xs font-medium text-gray-500 sm:text-sm">
+                  Müşteri Memnuniyeti
                 </p>
               </CardContent>
             </Card>
 
             {/* Stat 2 */}
-            <Card className="border-0 bg-[#E0F2F1] shadow-sm">
-              <CardContent className="p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+            <Card className="border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+              <CardContent className="p-4 text-center sm:p-6">
+                <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 sm:mb-4 sm:h-12 sm:w-12">
+                  <MapPin className="h-5 w-5 text-gray-700 sm:h-6 sm:w-6" />
                 </div>
-                <div className="mb-2 text-4xl font-bold">20+</div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  İstanbul'un Seçkin Lokasyonlarına Yakınlık
+                <div className="text-2xl font-bold text-black sm:text-3xl md:text-4xl">
+                  20+
+                </div>
+                <p className="mt-1 text-xs font-medium text-gray-500 sm:text-sm">
+                  Seçkin Lokasyona Yakın
                 </p>
               </CardContent>
             </Card>
 
             {/* Stat 3 */}
-            <Card className="border-0 bg-[#E3F2FD] shadow-sm">
-              <CardContent className="p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
+            <Card className="border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+              <CardContent className="p-4 text-center sm:p-6">
+                <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 sm:mb-4 sm:h-12 sm:w-12">
+                  <Home className="h-5 w-5 text-gray-700 sm:h-6 sm:w-6" />
                 </div>
-                <div className="mb-2 text-4xl font-bold">38</div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  Tam Donanımlı Mobilyalı Daire
+                <div className="text-2xl font-bold text-black sm:text-3xl md:text-4xl">
+                  87
+                </div>
+                <p className="mt-1 text-xs font-medium text-gray-500 sm:text-sm">
+                  Mobilyalı Daire
                 </p>
               </CardContent>
             </Card>
 
             {/* Stat 4 */}
-            <Card className="border-0 bg-[#F3E5F5] shadow-sm">
-              <CardContent className="p-6">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
+            <Card className="border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+              <CardContent className="p-4 text-center sm:p-6">
+                <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 sm:mb-4 sm:h-12 sm:w-12">
+                  <Users className="h-5 w-5 text-gray-700 sm:h-6 sm:w-6" />
                 </div>
-                <div className="mb-2 text-4xl font-bold">7/24</div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  Her Misafire Özel Destek
+                <div className="text-2xl font-bold text-black sm:text-3xl md:text-4xl">
+                  7/24
+                </div>
+                <p className="mt-1 text-xs font-medium text-gray-500 sm:text-sm">
+                  Misafir Desteği
                 </p>
               </CardContent>
             </Card>
@@ -233,85 +183,60 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Units Section */}
+      {/* Home, but better - Image Carousel */}
+      <ImageCarousel />
+
+      {/* Featured Units */}
       <FeaturedUnitsSection />
 
-      {/* Features Section */}
-      <section className="py-20">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold">
-            Why Choose Keten?
-          </h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            <Card>
-              <CardHeader>
-                <CardTitle>Modern Apartments</CardTitle>
-                <CardDescription>
-                  Contemporary, comfortable housing for everyone
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Mid-Term Rentals</CardTitle>
-                <CardDescription>
-                  Flexible lease terms for professionals and digital nomads
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Prime Location</CardTitle>
-                <CardDescription>
-                  Located in the heart of Istanbul with easy access to
-                  everything
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
+      {/* Business Slider - Blueground Style */}
+      <BusinessSlider />
 
-      {/* Testimonials Section */}
-      <section className="bg-muted py-20">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold">
-            What Our Guests Say
+      {/* Services Tabs - Neden Seçmelisiniz */}
+      <ServicesTabs />
+
+      {/* Testimonials */}
+      <section className="bg-gray-100 py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="mb-8 text-center text-2xl font-bold sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl">
+            Misafirlerimiz Ne Diyor?
           </h2>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="mx-auto grid max-w-6xl gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Testimonial
-              name="Sarah Johnson"
-              role="Resident"
+              name="Ayşe Yılmaz"
+              role="İş Seyahati"
               rating={5}
-              comment="Perfect location in Istanbul. Clean, comfortable, and great value. Highly recommend!"
+              comment="İstanbul'da mükemmel bir konum. Temiz, rahat ve harika bir değer. Kesinlikle tavsiye ederim!"
             />
             <Testimonial
-              name="Michael Chen"
-              role="Digital Nomad"
+              name="Mehmet Demir"
+              role="Dijital Göçebe"
               rating={5}
-              comment="Great place for mid-term stays. Fast WiFi, modern amenities, and excellent value for money."
+              comment="Orta vadeli konaklamalar için harika bir yer. Hızlı WiFi, modern olanaklar ve paranın karşılığını fazlasıyla veriyor."
             />
             <Testimonial
-              name="Emma Williams"
-              role="Professional"
+              name="Zeynep Kaya"
+              role="Profesyonel"
               rating={5}
-              comment="Beautiful property in a fantastic neighborhood. The booking process was smooth and the stay was perfect."
+              comment="Harika bir mahallede güzel bir mülk. Rezervasyon süreci sorunsuz ve konaklama mükemmeldi."
             />
           </div>
         </div>
       </section>
 
-      {/* Blog Preview Section */}
+      {/* Blog */}
       {latestPosts.length > 0 && (
-        <section className="py-20">
-          <div className="container">
-            <div className="mb-12 flex items-center justify-between">
-              <h2 className="text-3xl font-bold">Latest from Our Blog</h2>
-              <Button asChild variant="outline">
-                <Link href="/blog">View All</Link>
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="mb-8 text-center sm:mb-10 md:mb-12">
+              <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl">
+                Blogdan Son Yazılar
+              </h2>
+              <Button asChild variant="outline" className="shrink-0">
+                <Link href="/blog">Tümünü Gör</Link>
               </Button>
             </div>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="mx-auto grid max-w-6xl gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
               {latestPosts.map((post) => {
                 const wordCount = post.content.split(/\s+/).length;
                 const readingTime = Math.ceil(wordCount / 200);

@@ -1,14 +1,20 @@
 import { notFound } from "next/navigation";
-import { getBlogPostBySlug } from "@/lib/supabase/queries";
+import { blogPostsMockData } from "@/data/blog-mock";
 import { BlogContent } from "@/components/blog/blog-content";
 import { BlogCard } from "@/components/blog/blog-card";
-import { getBlogPosts } from "@/lib/supabase/queries";
 import Image from "next/image";
 import { Calendar, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { ShareButton } from "@/components/shared/share-button";
 import type { Metadata } from "next";
+
+// Static export için tüm slug'ları generate et
+export async function generateStaticParams() {
+  return blogPostsMockData.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -19,29 +25,22 @@ export async function generateMetadata({
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   
-  try {
-    const post = await getBlogPostBySlug(slug);
+  const post = blogPostsMockData.find((p) => p.slug === slug);
+  if (post) {
     return {
       title: `${post.title} | Keten Blog`,
       description: post.excerpt || "",
     };
-  } catch {
-    return {
-      title: "Blog Post | Keten",
-    };
   }
+  return {
+    title: "Blog Post | Keten",
+  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
 
-  let post;
-  try {
-    post = await getBlogPostBySlug(slug);
-  } catch (error) {
-    console.error("Error fetching blog post:", error);
-    notFound();
-  }
+  const post = blogPostsMockData.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
@@ -52,15 +51,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const readingTime = Math.ceil(wordCount / 200);
 
   // Get related posts (same category, excluding current post)
-  let relatedPosts = [];
-  try {
-    const allPosts = await getBlogPosts(4);
-    relatedPosts = allPosts
-      .filter((p) => p.id !== post.id && p.category === post.category)
-      .slice(0, 3);
-  } catch (error) {
-    console.error("Error fetching related posts:", error);
-  }
+  const relatedPosts = blogPostsMockData
+    .filter((p) => p.id !== post.id && p.category === post.category)
+    .slice(0, 3);
 
   return (
     <div className="container py-10">

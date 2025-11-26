@@ -58,19 +58,21 @@ export function validateEnv(): EnvConfig {
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  // Validate required variables
+  // For static site, Supabase is optional
+  // Validate required variables (now optional)
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
   const supabaseAnonKey =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY;
 
+  // Supabase is now optional for static site
   if (!supabaseUrl) {
-    errors.push(`Missing required variable: ${requiredEnvVars.supabase.url}`);
+    warnings.push(`Optional variable not set: ${requiredEnvVars.supabase.url} (database features disabled)`);
   }
 
   if (!supabaseAnonKey) {
-    errors.push(`Missing required variable: ${requiredEnvVars.supabase.anonKey}`);
+    warnings.push(`Optional variable not set: ${requiredEnvVars.supabase.anonKey} (database features disabled)`);
   }
 
   // Check optional variables
@@ -102,17 +104,15 @@ export function validateEnv(): EnvConfig {
     );
   }
 
-  // Throw error if required variables are missing
-  if (errors.length > 0) {
-    const errorMessage = [
-      "❌ Missing required environment variables:",
-      ...errors.map((err) => `   - ${err}`),
-      "",
-      "Please set these variables in your .env.local file.",
-      "See .env.example for reference.",
-    ].join("\n");
-
-    throw new Error(errorMessage);
+  // For static site, we don't throw errors for missing env vars
+  // Just log warnings
+  if (errors.length > 0 && process.env.NODE_ENV === "development") {
+    console.warn(
+      [
+        "⚠️  Environment variable errors (non-critical for static site):",
+        ...errors.map((err) => `   - ${err}`),
+      ].join("\n")
+    );
   }
 
   // Log warnings in development

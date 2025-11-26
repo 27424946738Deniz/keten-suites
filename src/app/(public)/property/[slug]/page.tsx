@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getPropertyBySlug } from "@/lib/supabase/queries";
+import { propertiesMockData } from "@/data/properties-mock";
 import { ImageGallery } from "@/components/property/image-gallery";
 import { AmenitiesList } from "@/components/property/amenities-list";
 import { AvailabilityCalendar } from "@/components/property/availability-calendar";
@@ -12,22 +12,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { ShareButton } from "@/components/shared/share-button";
 
+// Static export için tüm slug'ları generate et
+export async function generateStaticParams() {
+  return propertiesMockData.map((property) => ({
+    slug: property.slug,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: PropertyPageProps): Promise<Metadata> {
   const { slug } = await params;
   
-  try {
-    const property = await getPropertyBySlug(slug);
+  const property = propertiesMockData.find((p) => p.slug === slug);
+  if (property) {
     return {
       title: `${property.name} | Keten`,
       description: property.short_description || property.description || "",
     };
-  } catch {
-    return {
-      title: "Property | Keten",
-    };
   }
+  return {
+    title: "Property | Keten",
+  };
 }
 
 interface PropertyPageProps {
@@ -37,21 +43,7 @@ interface PropertyPageProps {
 export default async function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = await params;
 
-  let property;
-  try {
-    property = await getPropertyBySlug(slug);
-  } catch (error) {
-    console.error("Error fetching property:", error);
-    // Log more details if available
-    if (error instanceof Error) {
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
-    }
-    if (typeof error === "object" && error !== null) {
-      console.error("Error details:", JSON.stringify(error, null, 2));
-    }
-    notFound();
-  }
+  const property = propertiesMockData.find((p) => p.slug === slug);
 
   if (!property) {
     notFound();
@@ -154,11 +146,6 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
             {property.units && property.units.length > 0 && property.units[0].base_price_per_month ? (
               <PricingCalculator
                 basePricePerMonth={Number(property.units[0].base_price_per_month)}
-                studentDiscountPercentage={
-                  property.units[0].student_discount_percentage
-                    ? Number(property.units[0].student_discount_percentage)
-                    : 0
-                }
               />
             ) : (
               <Card>

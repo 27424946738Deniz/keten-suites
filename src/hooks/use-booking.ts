@@ -14,19 +14,22 @@ export const useBooking = () => {
   const submitBooking = async (data: BookingFormValues): Promise<BookingResult | null> => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // Mock API call for static export
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const result = await response.json();
+      const bookingReference = `KTN-${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase()}`;
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || "Failed to create booking");
-      }
+      const result = {
+        success: true,
+        data: {
+          booking_id: `static-${Date.now()}`,
+          booking_reference: bookingReference,
+          message: "Booking request received successfully"
+        }
+      };
 
       toast.success("Booking request submitted successfully!", {
         description: `Your booking reference is: ${result.data.booking_reference}`,
