@@ -460,14 +460,14 @@ export default async function UnitPage({ params }: UnitPageProps) {
 
                 <div className="grid grid-cols-2 gap-2">
                   <Button asChild variant="outline" className="w-full">
-                    <a href="tel:+905404906575">
+                    <a href="tel:+905314589979">
                       <Phone className="mr-2 h-4 w-4" />
                       Ara
                     </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full">
                     <a
-                      href="https://api.whatsapp.com/send?phone=905404906575"
+                      href="https://api.whatsapp.com/send?phone=905314589979"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -490,11 +490,11 @@ export default async function UnitPage({ params }: UnitPageProps) {
                   </p>
                   <div className="space-y-2 text-sm">
                     <a
-                      href="tel:+905404906575"
+                      href="tel:+905314589979"
                       className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
                     >
                       <Phone className="h-4 w-4" />
-                      0540 490 65 75
+                      +90 531 458 9979
                     </a>
                     <a
                       href="mailto:info@ketensuites.com"
