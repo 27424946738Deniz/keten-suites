@@ -25,9 +25,38 @@ export function UnitDetailGallery({ unitName, images }: UnitDetailGalleryProps) 
 
   return (
     <section className="relative">
-      <div className="grid grid-cols-4 grid-rows-2 gap-2 md:h-[500px]">
+      {/* Mobile Gallery */}
+      <div className="relative h-[300px] w-full md:hidden">
+        <Image
+          src={images[currentImageIndex]}
+          alt={unitName}
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevImage}
+          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={nextImage}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+        {/* Image Counter */}
+        <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1.5 text-xs text-white">
+          {currentImageIndex + 1} / {images.length}
+        </div>
+      </div>
+
+      {/* Desktop Gallery */}
+      <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-2 h-[500px]">
         {/* Main Image */}
-        <div className="relative col-span-4 row-span-2 md:col-span-2">
+        <div className="relative col-span-2 row-span-2">
           <Image
             src={images[currentImageIndex]}
             alt={unitName}
@@ -58,7 +87,7 @@ export function UnitDetailGallery({ unitName, images }: UnitDetailGalleryProps) 
         {images.slice(1, 5).map((img, index) => (
           <div
             key={index}
-            className="relative hidden cursor-pointer md:block"
+            className="relative cursor-pointer"
             onClick={() => setCurrentImageIndex(index + 1)}
           >
             <Image
