@@ -9,7 +9,7 @@ export const unitsMockData: any[] = [
       "Kompakt ve ekonomik stüdyo daire, bekarlar veya genç profesyoneller için ideal.",
     unit_type: UnitType.ECONOMY_1_PLUS_1,
     capacity: 2,
-    base_price_per_month: 15000,
+    base_price_per_month: 60000,
     description: `
       <p>Our 1+1 Economy Suite offers a comfortable and budget-friendly living space ideal for individuals and young professionals. Despite its compact size, the suite is thoughtfully designed to maximize space and functionality.</p>
       <p>The apartment features a cozy bedroom, a functional living area, a modern kitchenette, and a private bathroom. Large windows provide natural light throughout the day, creating a bright and welcoming atmosphere.</p>
@@ -60,7 +60,7 @@ export const unitsMockData: any[] = [
     slug: "1-plus-1-premium-suite",
     unit_type: UnitType.PREMIUM_1_PLUS_1,
     capacity: 2,
-    base_price_per_month: 22000,
+    base_price_per_month: 75000,
     short_description:
       "Modern donanımlı, premium bitişli ve şehir manzaralı üst düzey stüdyo daire.",
     description: `
@@ -119,7 +119,7 @@ export const unitsMockData: any[] = [
     slug: "2-plus-1-economy-suite",
     unit_type: UnitType.ECONOMY_2_PLUS_1,
     capacity: 4,
-    base_price_per_month: 28000,
+    base_price_per_month: 90000,
     short_description:
       "Aileler veya ev arkadaşları için ideal, geniş iki yatak odalı daire.",
     description: `
@@ -182,7 +182,7 @@ export const unitsMockData: any[] = [
     slug: "2-plus-1-family-duplex",
     unit_type: UnitType.FAMILY_DUPLEX_2_PLUS_1,
     capacity: 5,
-    base_price_per_month: 42000,
+    base_price_per_month: 110000,
     short_description:
       "Özel teraslı iki katlı dubleks daire, aileler için mükemmel seçim.",
     description: `
@@ -252,7 +252,7 @@ export const unitsMockData: any[] = [
     slug: "3-plus-1-family-duplex",
     unit_type: UnitType.FAMILY_DUPLEX_3_PLUS_1,
     capacity: 6,
-    base_price_per_month: 55000,
+    base_price_per_month: 130000,
     short_description:
       "Geniş teraslı premium üç yatak odalı dubleks, büyük aileler için ideal.",
     description: `
